@@ -1,68 +1,44 @@
 import React, { useState, useEffect } from 'react';
-import { Send, Paperclip, Smile, MoreHorizontal, Phone, Video, Users, ChevronDown, Star, CheckCircle, Clock, Shield, Smartphone, Building2, CreditCard } from 'lucide-react';
+import { Send, Paperclip, Smile, MoreHorizontal, Phone, Video, Users, CheckCircle } from 'lucide-react';
 
-// TypeScript interfaces
-interface Button {
-  text: string;
-  action: string;
-}
+const NodalDemo = () => {
+  const [messages, setMessages] = useState([]);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [processingStep, setProcessingStep] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [successMessageAdded, setSuccessMessageAdded] = useState(false);
 
-interface MessageContent {
-  type: 'welcome' | 'terms' | 'processing' | 'success' | 'text';
-  text: string;
-  showButtons?: boolean;
-  buttons?: Button[];
-  showProcessing?: boolean;
-}
-
-interface Message {
-  id: number;
-  sender: string;
-  isBot: boolean;
-  timestamp: string;
-  content: MessageContent;
-}
-
-const TeamsStitchDemo: React.FC = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [currentStep, setCurrentStep] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<string>('');
-  const [isTyping, setIsTyping] = useState<boolean>(false);
-  const [processingStep, setProcessingStep] = useState<number>(0);
-  const [isProcessing, setIsProcessing] = useState<boolean>(false);
-  const [successMessageAdded, setSuccessMessageAdded] = useState<boolean>(false);
-
-  const processingSteps: string[] = [
+  const processingSteps = [
     "Fetching details from the HR portal...",
     "Transferring your details to HDFC Bank...",
     "Processing HDFC Bank account opening...",
     "Finalizing account setup..."
   ];
 
-  const initialMessage: Message = {
-    id: 1,
-    sender: 'Zia from Zoho',
-    isBot: true,
-    timestamp: '9:15 AM',
-    content: {
-      type: 'welcome',
-      text: "👋 **Welcome aboard Deloitte!** \n\nContinuing with your onboarding, the next step is creating your Salary Account. We recommend opening your Salary Account with **HDFC Bank**.\n\n✅ **One-click account opening**\n• Just ensure that your HR portal has all personal details.\n\nWould you like to proceed?",
-      showButtons: true,
-      buttons: [
-        { text: "Yes, open HDFC Bank Salary Account", action: "accept" },
-        { text: "Maybe later", action: "decline" }
-      ]
-    }
-  };
-
   useEffect(() => {
-    // Add initial welcome message
+    const initialMessage = {
+      id: 1,
+      sender: 'Zia from Zoho',
+      isBot: true,
+      timestamp: '9:15 AM',
+      content: {
+        type: 'welcome',
+        text: "👋 **Welcome to Deloitte!** \n\nContinuing with your onboarding, the next step is creating your Salary Account. We recommend opening your Salary Account with **HDFC Bank**.\n\n✅ **One-click account opening**\n• Just ensure that your HR portal has all personal details.\n\nWould you like to proceed?",
+        showButtons: true,
+        buttons: [
+          { text: "Yes, open HDFC Bank Salary Account", action: "accept" },
+          { text: "Maybe later", action: "decline" }
+        ]
+      }
+    };
+
     setTimeout(() => {
       setMessages([initialMessage]);
     }, 1000);
   }, []);
 
-  const addMessage = (message: Omit<Message, 'id'>) => {
+  const addMessage = (message) => {
     setMessages(prev => [...prev, { ...message, id: Date.now() }]);
   };
 
@@ -73,9 +49,8 @@ const TeamsStitchDemo: React.FC = () => {
     }, 1500);
   };
 
-  const handleButtonClick = (action: string) => {
+  const handleButtonClick = (action) => {
     if (action === 'accept') {
-      // User accepts - directly proceed to processing (skip T&C step)
       addMessage({
         sender: 'You',
         isBot: false,
@@ -86,7 +61,7 @@ const TeamsStitchDemo: React.FC = () => {
       addTypingIndicator();
       setTimeout(() => {
         addMessage({
-          sender: 'Copilot',
+          sender: 'Zia from Zoho',
           isBot: true,
           timestamp: '9:17 AM',
           content: {
@@ -108,7 +83,7 @@ const TeamsStitchDemo: React.FC = () => {
       addTypingIndicator();
       setTimeout(() => {
         addMessage({
-          sender: 'Copilot',
+          sender: 'Zia from Zoho',
           isBot: true,
           timestamp: '9:16 AM',
           content: {
@@ -125,6 +100,21 @@ const TeamsStitchDemo: React.FC = () => {
       setProcessingStep(0);
       setIsProcessing(false);
       setTimeout(() => {
+        const initialMessage = {
+          id: 1,
+          sender: 'Zia from Zoho',
+          isBot: true,
+          timestamp: '9:15 AM',
+          content: {
+            type: 'welcome',
+            text: "👋 **Welcome to Deloitte!** \n\nContinuing with your onboarding, the next step is creating your Salary Account. We recommend opening your Salary Account with **HDFC Bank**.\n\n✅ **One-click account opening**\n• Just ensure that your HR portal has all personal details.\n\nWould you like to proceed?",
+            showButtons: true,
+            buttons: [
+              { text: "Yes, open HDFC Bank Salary Account", action: "accept" },
+              { text: "Maybe later", action: "decline" }
+            ]
+          }
+        };
         setMessages([initialMessage]);
       }, 500);
     }
@@ -151,13 +141,12 @@ const TeamsStitchDemo: React.FC = () => {
     }
   }, [isProcessing, processingSteps.length]);
 
-  // Separate useEffect to handle success message
   useEffect(() => {
     if (!isProcessing && processingStep === processingSteps.length - 1 && !successMessageAdded) {
       setSuccessMessageAdded(true);
       setTimeout(() => {
         addMessage({
-          sender: 'Copilot',
+          sender: 'Zia from Zoho',
           isBot: true,
           timestamp: '9:18 AM',
           content: {
@@ -181,11 +170,10 @@ const TeamsStitchDemo: React.FC = () => {
       });
       setInputValue('');
       
-      // Simple bot response for custom messages
       addTypingIndicator();
       setTimeout(() => {
         addMessage({
-          sender: 'Copilot',
+          sender: 'Zia from Zoho',
           isBot: true,
           timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
           content: { 
@@ -197,7 +185,7 @@ const TeamsStitchDemo: React.FC = () => {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       handleSendMessage();
     }
@@ -231,7 +219,7 @@ const TeamsStitchDemo: React.FC = () => {
     );
   };
 
-  const renderMessage = (message: Message) => {
+  const renderMessage = (message) => {
     const isBot = message.isBot;
     
     return (
@@ -260,7 +248,7 @@ const TeamsStitchDemo: React.FC = () => {
             
             {message.content.showButtons && message.content.buttons && (
               <div className="mt-3 space-y-2">
-                {message.content.buttons.map((button: Button, index: number) => (
+                {message.content.buttons.map((button, index) => (
                   <button
                     key={index}
                     onClick={() => handleButtonClick(button.action)}
@@ -283,14 +271,13 @@ const TeamsStitchDemo: React.FC = () => {
 
   return (
     <div className="h-screen bg-white flex flex-col max-w-4xl mx-auto border-x border-gray-200">
-      {/* Teams Header */}
       <div className="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-purple-600 rounded flex items-center justify-center">
             <span className="text-white text-sm font-bold">AI</span>
           </div>
           <div>
-            <h1 className="font-semibold text-gray-900">Copilot</h1>
+            <h1 className="font-semibold text-gray-900">Zia from Zoho</h1>
             <p className="text-xs text-gray-500">AI Assistant • Stitch Banking Integration</p>
           </div>
         </div>
@@ -311,7 +298,6 @@ const TeamsStitchDemo: React.FC = () => {
         </div>
       </div>
 
-      {/* Chat Messages */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map(renderMessage)}
         
@@ -331,7 +317,6 @@ const TeamsStitchDemo: React.FC = () => {
         )}
       </div>
 
-      {/* Message Input */}
       <div className="border-t border-gray-200 p-4">
         <div className="flex items-center gap-2 bg-gray-50 rounded-lg border border-gray-200 p-2">
           <button className="p-2 hover:bg-gray-200 rounded">
@@ -360,11 +345,11 @@ const TeamsStitchDemo: React.FC = () => {
         </div>
         
         <p className="text-xs text-gray-500 mt-2 text-center">
-          Copilot can make mistakes. Consider checking important information.
+          Zia from Zoho can make mistakes. Consider checking important information.
         </p>
       </div>
     </div>
   );
 };
 
-export default TeamsStitchDemo;
+export default NodalDemo;
