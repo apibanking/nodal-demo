@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/nodal-demo/static/css/main.f855e6bc.css",
+    "main.js": "/nodal-demo/static/js/main.85b11f4a.js",
+    "static/js/453.0f2c738a.chunk.js": "/nodal-demo/static/js/453.0f2c738a.chunk.js",
+    "index.html": "/nodal-demo/index.html",
+    "main.f855e6bc.css.map": "/nodal-demo/static/css/main.f855e6bc.css.map",
+    "main.85b11f4a.js.map": "/nodal-demo/static/js/main.85b11f4a.js.map",
+    "453.0f2c738a.chunk.js.map": "/nodal-demo/static/js/453.0f2c738a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.f855e6bc.css",
+    "static/js/main.85b11f4a.js"
+  ]
+}
