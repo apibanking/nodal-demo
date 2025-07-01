@@ -1,10 +1,10 @@
 import React from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
-import TeamsStitchDemo from './TeamsStitchDemo';
+import NodalDemo from './NodalDemo';
 
 function App() {
-  return <TeamsStitchDemo />;
+  return <NodalDemo />;
   // return (
   //   <div className="App">
   //     <header className="App-header">
