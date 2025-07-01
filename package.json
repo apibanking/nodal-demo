@@ -22,7 +22,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://tvishadholakia.github.io/nodal-demo",
+  "homepage": "https://apibanking.github.io/nodal-demo",
   "eslintConfig": {
     "extends": [
       "react-app",
